@@ -33,7 +33,5 @@ public enum TipoCliente {
 		}
 		throw new IllegalArgumentException("Código invalido: "+ cod);
 	}
-
-	
 	
 }
