@@ -19,4 +19,9 @@ public class CategoriaService {
 		Optional<Categoria> obj = repository.findById(id);
 		return obj.orElseThrow(()->  new ResourceNotFoundExeception("Recurso não encontrado. ID: "+id));
 	}
+	public Categoria inserir (Categoria obj) {
+		obj.setId(null);
+		return repository.save(obj);
+		
+	}
 }
