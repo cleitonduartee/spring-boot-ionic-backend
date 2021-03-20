@@ -1,6 +1,9 @@
 package com.cursomc.resource;
 
 import java.net.URI;
+import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.cursomc.domain.Categoria;
+import com.cursomc.dto.CategoriaDTO;
 import com.cursomc.services.CategoriaService;
 
 @RestController
@@ -28,6 +32,12 @@ public class CategoriaResource {
 	public ResponseEntity<Categoria> buscarPorId(@PathVariable Long id){
 		Categoria cat = service.buscarPorId(id);
 		return ResponseEntity.ok().body(cat);
+	}
+	@GetMapping
+	public ResponseEntity<List<CategoriaDTO>> buscarTodos(){
+		List<Categoria> lista = service.buscarTodos();
+		List<CategoriaDTO> listaDTO = lista.stream().map((x)-> new CategoriaDTO(x)).collect(Collectors.toList());
+		return ResponseEntity.ok().body(listaDTO);
 	}
 	@PostMapping
 	public ResponseEntity<Void> inserir (@RequestBody Categoria obj){
