@@ -4,6 +4,7 @@ import java.net.URI;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,7 +26,7 @@ public class CategoriaResource {
 	
 	@GetMapping(value = "/{id}")
 	public ResponseEntity<Categoria> buscarPorId(@PathVariable Long id){
-		Categoria cat = service.buscar(id);
+		Categoria cat = service.buscarPorId(id);
 		return ResponseEntity.ok().body(cat);
 	}
 	@PostMapping
@@ -42,5 +43,10 @@ public class CategoriaResource {
 		obj = service.atualizar(obj);
 		return ResponseEntity.noContent().build();
 		
+	}
+	@DeleteMapping(value = "/{id}")
+	public ResponseEntity<Void> deletar(@PathVariable Long id){
+		service.deletar(id);
+		return ResponseEntity.noContent().build();
 	}
 }

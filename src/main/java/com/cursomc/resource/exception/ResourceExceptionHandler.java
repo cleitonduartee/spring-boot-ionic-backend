@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import com.cursomc.services.exception.DataIntegrityException;
 import com.cursomc.services.exception.ResourceNotFoundExeception;
 
 @ControllerAdvice
@@ -18,6 +19,13 @@ public class ResourceExceptionHandler {
 	public ResponseEntity<StandarError> resourceNotFound (ResourceNotFoundExeception e, HttpServletRequest request){
 		HttpStatus status = HttpStatus.NOT_FOUND;
 		String error = "Id não encontrado";
+		StandarError err = new StandarError(Instant.now(),status.value(),error,e.getMessage(),request.getRequestURI());
+		return ResponseEntity.status(status).body(err);
+	}
+	@ExceptionHandler(DataIntegrityException.class)
+	public ResponseEntity<StandarError> dataIntegrity (DataIntegrityException e, HttpServletRequest request){
+		HttpStatus status = HttpStatus.BAD_REQUEST;
+		String error = "Erro de Integridade no Banco de Dados";
 		StandarError err = new StandarError(Instant.now(),status.value(),error,e.getMessage(),request.getRequestURI());
 		return ResponseEntity.status(status).body(err);
 	}
