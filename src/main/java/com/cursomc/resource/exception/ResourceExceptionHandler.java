@@ -6,6 +6,8 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
@@ -27,6 +29,16 @@ public class ResourceExceptionHandler {
 		HttpStatus status = HttpStatus.BAD_REQUEST;
 		String error = "Erro de Integridade no Banco de Dados";
 		StandarError err = new StandarError(Instant.now(),status.value(),error,e.getMessage(),request.getRequestURI());
+		return ResponseEntity.status(status).body(err);
+	}
+	@ExceptionHandler(MethodArgumentNotValidException.class)
+	public ResponseEntity<StandarError> validation (MethodArgumentNotValidException e, HttpServletRequest request){
+		HttpStatus status = HttpStatus.BAD_REQUEST;
+		String error = "Erro de validação";
+		ValidationError err = new ValidationError(Instant.now(),status.value(),error,e.getMessage(),request.getRequestURI());
+		for (FieldError x : e.getBindingResult().getFieldErrors()) {
+			err.getErrors().add(new FieldMessage(x.getField(), x.getDefaultMessage()));
+		}
 		return ResponseEntity.status(status).body(err);
 	}
 }

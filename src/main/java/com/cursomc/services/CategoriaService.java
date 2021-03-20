@@ -12,6 +12,7 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import com.cursomc.domain.Categoria;
+import com.cursomc.dto.CategoriaDTO;
 import com.cursomc.repositories.CategoriaRepository;
 import com.cursomc.services.exception.DataIntegrityException;
 import com.cursomc.services.exception.ResourceNotFoundExeception;
@@ -26,10 +27,12 @@ public class CategoriaService {
 		Optional<Categoria> obj = repository.findById(id);
 		return obj.orElseThrow(()->  new ResourceNotFoundExeception("Recurso não encontrado. ID: "+id));
 	}
-	public Categoria inserir (Categoria obj) {
+
+	public Categoria inserir(Categoria obj) {
+
 		obj.setId(null);
 		return repository.save(obj);
-		
+
 	}
 	public Categoria atualizar(Categoria obj) {
 		buscarPorId(obj.getId());
@@ -49,5 +52,11 @@ public class CategoriaService {
 	public Page<Categoria> buscarPorPagina(Integer page, Integer linesPerPage, String orderBy, String direction){
 		PageRequest pageRequest = PageRequest.of(page,linesPerPage,Direction.valueOf(direction),orderBy);
 		return repository.findAll(pageRequest);
+	}
+
+	public Categoria converteCategora(CategoriaDTO objDTO) {
+
+		return new Categoria(objDTO.getId(), objDTO.getNome());
+
 	}
 }
