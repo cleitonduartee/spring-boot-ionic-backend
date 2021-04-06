@@ -6,4 +6,5 @@ import com.cursomc.domain.Categoria;
 
 public interface CategoriaRepository extends JpaRepository<Categoria, Long> {
 
+	
 }

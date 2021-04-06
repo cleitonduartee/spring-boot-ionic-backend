@@ -8,7 +8,6 @@ import javax.persistence.ManyToOne;
 
 import com.cursomc.domain.Pedido;
 import com.cursomc.domain.Produto;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Embeddable
 public class ItemPedidoPK implements Serializable {

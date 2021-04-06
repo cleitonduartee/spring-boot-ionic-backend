@@ -1,4 +1,4 @@
-package com.cursomc.dto;
+package com.cursomc.domain.dto;
 
 import java.io.Serializable;
 
