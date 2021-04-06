@@ -3,7 +3,6 @@ package com.cursomc.services;
 import java.util.List;
 import java.util.Optional;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
@@ -35,8 +34,9 @@ public class CategoriaService {
 
 	}
 	public Categoria atualizar(Categoria obj) {
-		buscarPorId(obj.getId());
-		return repository.save(obj);
+		Categoria newObj = buscarPorId(obj.getId());
+		updateDate(newObj, obj);
+		return repository.save(newObj);
 	}
 	public void deletar(Long id) {
 		buscarPorId(id);
@@ -58,5 +58,9 @@ public class CategoriaService {
 
 		return new Categoria(objDTO.getId(), objDTO.getNome());
 
+	}
+	private void updateDate(Categoria newObj, Categoria obj) {		
+		newObj.setNome(obj.getNome());
+		
 	}
 }
