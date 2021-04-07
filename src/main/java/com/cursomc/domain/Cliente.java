@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
@@ -27,7 +28,7 @@ public class Cliente implements Serializable {
 	private String cpfOUCnpj;
 	private Integer tipo;
 	
-	@OneToMany(mappedBy = "cliente")
+	@OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
 	private Set<Endereco>enderecos = new HashSet<>();
 	
 	@ElementCollection
