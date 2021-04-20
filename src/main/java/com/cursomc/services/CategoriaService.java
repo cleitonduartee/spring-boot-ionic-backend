@@ -22,7 +22,7 @@ public class CategoriaService {
 	@Autowired
 	private CategoriaRepository repository;
 	
-	public Categoria buscarPorId(Long id) {
+	public Categoria buscarPorId(Integer id) {
 		Optional<Categoria> obj = repository.findById(id);
 		return obj.orElseThrow(()->  new ResourceNotFoundExeception("Recurso não encontrado. ID: "+id));
 	}
@@ -38,7 +38,7 @@ public class CategoriaService {
 		updateDate(newObj, obj);
 		return repository.save(newObj);
 	}
-	public void deletar(Long id) {
+	public void deletar(Integer id) {
 		buscarPorId(id);
 		try {
 			repository.deleteById(id);

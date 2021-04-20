@@ -32,7 +32,7 @@ public class CategoriaResource {
 	private CategoriaService service;
 	
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<Categoria> buscarPorId(@PathVariable Long id){
+	public ResponseEntity<Categoria> buscarPorId(@PathVariable Integer id){
 		Categoria cat = service.buscarPorId(id);
 		return ResponseEntity.ok().body(cat);
 	}
@@ -62,7 +62,7 @@ public class CategoriaResource {
 
 	}
 	@PutMapping(value = "/{id}")
-	public ResponseEntity<Void> atualizar (@PathVariable Long id,@Valid  @RequestBody CategoriaDTO objDTO){
+	public ResponseEntity<Void> atualizar (@PathVariable Integer id,@Valid  @RequestBody CategoriaDTO objDTO){
 		Categoria obj = service.converteCategora(objDTO);
 		obj.setId(id);
 		obj = service.atualizar(obj);
@@ -70,7 +70,7 @@ public class CategoriaResource {
 		
 	}
 	@DeleteMapping(value = "/{id}")
-	public ResponseEntity<Void> deletar(@PathVariable Long id){
+	public ResponseEntity<Void> deletar(@PathVariable Integer id){
 		service.deletar(id);
 		return ResponseEntity.noContent().build();
 	}
